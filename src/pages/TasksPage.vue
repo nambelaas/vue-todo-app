@@ -11,32 +11,36 @@
               placeholder="+ Add new task. Press enter to save."
             />
           </div>
-          <!-- List of tasks -->
-          <div class="border border-gray-300 rounded-lg px-3 py-2 mt-2">
-            <ul class="list-group list-group-flush">
-              <Task v-for="task in tasks" :task="task" :key="task.id" />
-            </ul>
-          </div>
+          <!-- List of uncompleted tasks -->
+          <Tasks :tasks="uncompletedTasks" />
+
+          <!-- show toggle button -->
+
+          <!-- list of completed tasks -->
+          <Tasks :tasks="completedTasks" />
         </div>
       </div>
     </div>
   </main>
 </template>
 <script setup lang="ts">
-import Task from '@/components/tasks/Task.vue'
+import Tasks from '@/components/tasks/Tasks.vue'
 import { allTasks } from '@/http/task-api'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 interface Task {
   id: number
   name: string
   is_completed: boolean
 }
 
-const tasks = ref(Array<Task>)
+const tasks = ref([])
 
 onMounted(async () => {
   const { data } = await allTasks()
   tasks.value = data.data
   console.log(data)
 })
+
+const uncompletedTasks = computed(() => tasks.value.filter((task) => !task.is_completed))
+const completedTasks = computed(() => tasks.value.filter((task) => task.is_completed))
 </script>

@@ -5,12 +5,12 @@
     @mouseleave="setHover(false)"
   >
     <div class="flex items-center space-x-2">
-      <input class="" type="checkbox" />
-      <div class="grow" title="Double click the text to edit or remove">
+      <input class="" :class="completedClass" type="checkbox" :checked="task?.is_completed" />
+      <div class="grow" :class="completedClass" title="Double click the text to edit or remove">
         <!-- <div class="relative">
                                             <input class="editable-task" type="text" />
                                         </div> -->
-        <span>{{ task.name }}</span>
+        <span>{{ task?.name }}</span>
       </div>
       <!-- <div class="task-date">24 Feb 12:00</div> -->
     </div>
@@ -34,7 +34,7 @@ import { computed, ref } from 'vue'
 import IconPencil from '../icons/IconPencil.vue'
 import IconTrash from '../icons/IconTrash.vue'
 
-defineProps({
+const props = defineProps({
   task: Object,
 })
 
@@ -43,4 +43,8 @@ const taskHover = ref(false)
 const setHover = (value: boolean) => {
   taskHover.value = value
 }
+
+const completedClass = computed(() => {
+  return props.task?.is_completed ? 'text-gray-500 line-through' : ''
+})
 </script>
