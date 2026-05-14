@@ -3,7 +3,6 @@ import api from "./api";
 interface Task {
     id: number
     name: string
-    date: string
 }
 
 const resource = "/tasks"
