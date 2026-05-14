@@ -42,7 +42,9 @@
                       />
                     </svg>
                   </button>
-                  <button class="border border-red-300 rounded-lg py-2 px-4 text-red-500 hover:bg-red-50 cursor-pointer">
+                  <button
+                    class="border border-red-300 rounded-lg py-2 px-4 text-red-500 hover:bg-red-50 cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -65,3 +67,12 @@
     </div>
   </main>
 </template>
+<script setup lang="ts">
+import { allTasks } from '@/http/task-api'
+import { onMounted, onUnmounted } from 'vue'
+
+onMounted(async () => {
+  const { data } = await allTasks()
+  console.log(data)
+})
+</script>
