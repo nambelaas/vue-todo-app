@@ -5,7 +5,13 @@
     @mouseleave="setHover(false)"
   >
     <div class="flex items-center space-x-2">
-      <input class="" :class="completedClass" type="checkbox" :checked="task?.is_completed" />
+      <input
+        class=""
+        :class="completedClass"
+        type="checkbox"
+        :checked="task?.is_completed"
+        @change="markTaskAsCompleted"
+      />
       <div
         class="grow"
         :class="completedClass"
@@ -38,7 +44,7 @@ const props = defineProps({
   task: Object,
 })
 
-const emit = defineEmits(['updated'])
+const emit = defineEmits(['updated', 'completed'])
 
 const taskHover = ref(false)
 
@@ -65,6 +71,13 @@ const handleUpdateTask = (event: Event) => {
   const updatedTask = { ...props.task, name: target.value }
   isEdit.value = false
   emit('updated', updatedTask)
+}
+
+const markTaskAsCompleted = (event: Event) => {
+  const target = event.target as HTMLInputElement
+
+  const updatedTask = { ...props.task, is_completed: !props.task?.is_completed }
+  emit('completed', updatedTask)
 }
 
 const undo = () => {
