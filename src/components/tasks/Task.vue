@@ -16,8 +16,9 @@
           <input
             class="border border-gray-200 rounded-md"
             type="text"
-            @keyup.esc="isEdit = false"
+            @keyup.esc="undo"
             @keyup.enter="handleUpdateTask"
+            v-model="editingTask"
             v-focus
           />
         </div>
@@ -50,6 +51,7 @@ const completedClass = computed(() => {
 })
 
 const isEdit = ref(false)
+const editingTask = ref(props.task?.name)
 
 const vFocus = {
   mounted: (el: HTMLElement) => {
@@ -63,5 +65,10 @@ const handleUpdateTask = (event: Event) => {
   const updatedTask = { ...props.task, name: target.value }
   isEdit.value = false
   emit('updated', updatedTask)
+}
+
+const undo = () => {
+  isEdit.value = false
+  editingTask.value = props.task?.name
 }
 </script>
