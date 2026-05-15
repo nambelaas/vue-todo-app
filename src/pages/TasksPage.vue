@@ -4,13 +4,8 @@
       <div class="w-full flex items-center justify-center">
         <div class="overflow-y-auto w-1/2">
           <!-- Add new Task -->
-          <div class="relative">
-            <input
-              type="text"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
-              placeholder="+ Add new task. Press enter to save."
-            />
-          </div>
+          <NewTask @added="handleAddedTask" />
+
           <!-- List of uncompleted tasks -->
           <Tasks :tasks="uncompletedTasks" />
 
@@ -34,8 +29,10 @@
 </template>
 <script setup lang="ts">
 import Tasks from '@/components/tasks/Tasks.vue'
-import { allTasks } from '@/http/task-api'
+import { allTasks, createTask } from '@/http/task-api'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import NewTask from '@/components/tasks/NewTask.vue'
+
 interface Task {
   id: number
   name: string
@@ -62,4 +59,9 @@ const completedTasksVisible = computed(
 )
 
 const showCompletedTasks = ref(false)
+
+const handleAddedTask = async (newTask: Object) => {
+  const { data: createdTask } = await createTask(newTask)
+  tasks.value.unshift(createdTask.data)
+}
 </script>

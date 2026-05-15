@@ -9,7 +9,7 @@ const resource = "/tasks"
 
 export const allTasks = () => api.get(resource)
 
-export const createTask = (task: Task) => api.post(resource)
+export const createTask = (task: Object) => api.post(resource, task)
 
 export const updateTask = (id: number, task: Task) => api.put(`${resource}/${id}`, task)
 
