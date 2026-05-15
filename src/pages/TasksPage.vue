@@ -15,9 +15,18 @@
           <Tasks :tasks="uncompletedTasks" />
 
           <!-- show toggle button -->
+          <div class="flex justify-center mt-2" v-show="showToggleCompleteBtn">
+            <button
+              class="py-2 px-4 rounded-md border border-gray-400 bg-gray-400 hover:bg-gray-500 cursor-pointer transition-colors text-white"
+              @click="($event) => (showCompletedTasks = !showCompletedTasks)"
+            >
+              <span v-if="!showCompletedTasks">Show Completed</span>
+              <span v-else>Hide Completed</span>
+            </button>
+          </div>
 
           <!-- list of completed tasks -->
-          <Tasks :tasks="completedTasks" />
+          <Tasks :tasks="completedTasks" :show="completedTasksVisible && showCompletedTasks" />
         </div>
       </div>
     </div>
@@ -43,4 +52,14 @@ onMounted(async () => {
 
 const uncompletedTasks = computed(() => tasks.value.filter((task) => !task.is_completed))
 const completedTasks = computed(() => tasks.value.filter((task) => task.is_completed))
+
+const showToggleCompleteBtn = computed(
+  () => uncompletedTasks.value.length > 0 && completedTasks.value.length > 0,
+)
+
+const completedTasksVisible = computed(
+  () => uncompletedTasks.value.length === 0 || completedTasks.value.length > 0,
+)
+
+const showCompletedTasks = ref(false)
 </script>
