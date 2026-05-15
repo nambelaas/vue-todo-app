@@ -17,6 +17,7 @@
             class="border border-gray-200 rounded-md"
             type="text"
             @keyup.esc="isEdit = false"
+            @keyup.enter="handleUpdateTask"
             v-focus
           />
         </div>
@@ -36,6 +37,8 @@ const props = defineProps({
   task: Object,
 })
 
+const emit = defineEmits(['updated'])
+
 const taskHover = ref(false)
 
 const setHover = (value: boolean) => {
@@ -52,5 +55,13 @@ const vFocus = {
   mounted: (el: HTMLElement) => {
     el.focus()
   },
+}
+
+const handleUpdateTask = (event: Event) => {
+  const target = event.target as HTMLInputElement
+
+  const updatedTask = { ...props.task, name: target.value }
+  isEdit.value = false
+  emit('updated', updatedTask)
 }
 </script>
