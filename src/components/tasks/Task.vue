@@ -6,33 +6,31 @@
   >
     <div class="flex items-center space-x-2">
       <input class="" :class="completedClass" type="checkbox" :checked="task?.is_completed" />
-      <div class="grow" :class="completedClass" title="Double click the text to edit or remove">
-        <!-- <div class="relative">
-                                            <input class="editable-task" type="text" />
-                                        </div> -->
-        <span>{{ task?.name }}</span>
+      <div
+        class="grow"
+        :class="completedClass"
+        title="Double click the text to edit or remove"
+        @dblclick="isEdit = true"
+      >
+        <div class="relative" v-if="isEdit">
+          <input
+            class="border border-gray-200 rounded-md"
+            type="text"
+            @keyup.esc="isEdit = false"
+            v-focus
+          />
+        </div>
+        <span v-else>{{ task?.name }}</span>
       </div>
       <!-- <div class="task-date">24 Feb 12:00</div> -->
     </div>
-    <div :class="['space-x-2', taskHover ? 'block' : 'hidden']">
-      <button
-        class="border border-yellow-300 rounded-lg py-2 px-4 text-yellow-500 hover:bg-yellow-50 cursor-pointer"
-      >
-        <IconPencil />
-      </button>
-      <button
-        class="border border-red-300 rounded-lg py-2 px-4 text-red-500 hover:bg-red-50 cursor-pointer"
-      >
-        <IconTrash />
-      </button>
-    </div>
+    <TaskActions :show-action="taskHover" @edit="isEdit = true" v-show="!isEdit" />
   </li>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import IconPencil from '../icons/IconPencil.vue'
-import IconTrash from '../icons/IconTrash.vue'
+import TaskActions from './TaskActions.vue'
 
 const props = defineProps({
   task: Object,
@@ -47,4 +45,12 @@ const setHover = (value: boolean) => {
 const completedClass = computed(() => {
   return props.task?.is_completed ? 'text-gray-500 line-through' : ''
 })
+
+const isEdit = ref(false)
+
+const vFocus = {
+  mounted: (el: HTMLElement) => {
+    el.focus()
+  },
+}
 </script>
