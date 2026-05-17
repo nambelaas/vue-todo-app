@@ -52,7 +52,7 @@ interface Task {
 }
 
 const store = useTaskStore()
-const { task } = storeToRefs(store)
+const { completedTasks, uncompletedTasks } = storeToRefs(store)
 // store.$patch({
 //   task: {
 //     name: 'New First Task',
@@ -65,14 +65,14 @@ const tasks = ref([])
 onMounted(async () => {
   const { data } = await allTasks()
   tasks.value = data.data
-  console.log(task.value)
+  // console.log(task.value)
 })
 
-const uncompletedTasks = computed(() => tasks.value.filter((task) => !task.is_completed))
-const completedTasks = computed(() => tasks.value.filter((task) => task.is_completed))
+// const uncompletedTasks = computed(() => tasks.value.filter((task) => !task.is_completed))
+// const completedTasks = computed(() => tasks.value.filter((task) => task.is_completed))
 
 const showToggleCompleteBtn = computed(
-  () => uncompletedTasks.value.length > 0 && completedTasks.value.length > 0,
+  () => uncompletedTasks.value.length > 0 || completedTasks.value.length > 0,
 )
 
 const completedTasksVisible = computed(
