@@ -42,6 +42,8 @@ import Tasks from '@/components/tasks/Tasks.vue'
 import { allTasks, completeTask, createTask, removeTask, updateTask } from '@/http/task-api'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import NewTask from '@/components/tasks/NewTask.vue'
+import { useTaskStore } from '@/stores/task'
+import { storeToRefs } from 'pinia'
 
 interface Task {
   id: number
@@ -49,12 +51,21 @@ interface Task {
   is_completed: boolean
 }
 
+const store = useTaskStore()
+const { task } = storeToRefs(store)
+// store.$patch({
+//   task: {
+//     name: 'New First Task',
+//     is_completed: true,
+//   },
+// })
+
 const tasks = ref([])
 
 onMounted(async () => {
   const { data } = await allTasks()
   tasks.value = data.data
-  console.log(data)
+  console.log(task.value)
 })
 
 const uncompletedTasks = computed(() => tasks.value.filter((task) => !task.is_completed))
