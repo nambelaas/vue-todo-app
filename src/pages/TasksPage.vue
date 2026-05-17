@@ -53,6 +53,8 @@ interface Task {
 
 const store = useTaskStore()
 const { completedTasks, uncompletedTasks } = storeToRefs(store)
+const { fetchAllTasks } = store
+
 // store.$patch({
 //   task: {
 //     name: 'New First Task',
@@ -63,9 +65,7 @@ const { completedTasks, uncompletedTasks } = storeToRefs(store)
 const tasks = ref([])
 
 onMounted(async () => {
-  const { data } = await allTasks()
-  tasks.value = data.data
-  // console.log(task.value)
+  fetchAllTasks()
 })
 
 // const uncompletedTasks = computed(() => tasks.value.filter((task) => !task.is_completed))
