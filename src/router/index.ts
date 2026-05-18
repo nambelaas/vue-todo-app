@@ -10,8 +10,13 @@ const router = createRouter({
 router.beforeEach((to, from) => {
     console.log('Global before each', to, from)
 
-    if (to.path === '/tasks' || to.path === '/summary') {
-        return { name: 'Login' }
+    if (to.meta.auth) {
+        return {
+            name: 'Login',
+            query: {
+                redirect: to.fullPath
+            }
+        }
     }
 
 })
