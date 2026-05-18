@@ -56,7 +56,8 @@
       >
         <ul class="flex flex-col sm:flex-row gap-2">
           <li class="nav-item">
-            <router-link :to="{ name: 'Tasks' }" class="">Tasks</router-link>
+            <!-- <router-link :to="{ name: 'Tasks' }" class="">Tasks</router-link> -->
+            <a href="#" @click.prevent="$router.push('/tasks')">Tasks</a>
           </li>
           <li class="nav-item">
             <router-link to="#" class="nav-link">Summary</router-link>
