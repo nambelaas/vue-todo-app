@@ -56,27 +56,27 @@
       >
         <ul class="flex flex-col sm:flex-row gap-2">
           <li class="nav-item">
-            <a href="my-tasks.html" class="">Tasks</a>
+            <router-link :to="{ name: 'Tasks' }" class="">Tasks</router-link>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Summary</a>
+            <router-link to="#" class="nav-link">Summary</router-link>
           </li>
         </ul>
         <ul
           class="w-full sm:w-auto flex flex-col sm:flex-row space-y-2 sm:space-y-0 border-t pt-4 border-gray-200 sm:border-0 sm:pt-0"
         >
           <li class="">
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'Login' }"
               class="block w-full text-center py-2 sm:w-auto sm:px-4 bg-white-200 border border-violet-400 rounded-lg hover:bg-violet-50 font-semibold transition-colors text-violet-700 sm:ms-2"
-              >Login</a
+              >Login</router-link
             >
           </li>
           <li class="nav-item">
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'Register' }"
               class="block w-full text-center py-2 sm:w-auto sm:px-4 bg-green-600 border border-green-600 rounded-lg hover:bg-green-500 font-semibold transition-colors text-white sm:ms-2"
-              >Register</a
+              >Register</router-link
             >
           </li>
           <li class="nav-item">
